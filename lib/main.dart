@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   double result = 0;
   // ignore: deprecated_member_use
   List<String> listViewItem = List<String>();
-  final konvertHandler = Function;
+ 
 
   void hitungSuhu() {
     setState(() {
@@ -87,6 +87,7 @@ class _MyAppState extends State<MyApp> {
       onChanged: (String changeValue) {
         setState(() {
           _newValue = changeValue;
+          hitungSuhu();
         });
       },
     );
