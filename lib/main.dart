@@ -4,6 +4,7 @@ import 'input.dart';
 import 'result.dart';
 import 'convert.dart';
 import 'riwayatkonversi.dart';
+import 'dropdown.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,7 +26,6 @@ class _MyAppState extends State<MyApp> {
   double result = 0;
   // ignore: deprecated_member_use
   List<String> listViewItem = List<String>();
- 
 
   void hitungSuhu() {
     setState(() {
@@ -38,9 +38,17 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void dropdownOnChanged(String changeValue) {
+    setState(() {
+      _newValue = changeValue;
+      hitungSuhu();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -53,9 +61,9 @@ class _MyAppState extends State<MyApp> {
         body: Container(
           margin: EdgeInsets.all(8),
           child: Column(
-            children:[
+            children: [
               Input(inputController: inputController),
-              buildDropdownButton(),
+              DropDownKonversi(listItem: listItem, newValue: _newValue, dropdownOnChanged: dropdownOnChanged),
               Result(result: result),
               Convert(konvertHandler: hitungSuhu),
               Container(
@@ -66,31 +74,14 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
               Expanded(
-                child:RiwayatKonversi(listViewItem: listViewItem),
-                 ),
+                child: RiwayatKonversi(listViewItem: listViewItem),
+              ),
             ],
           ),
         ),
       ),
     );
   }
-
-  DropdownButton<String> buildDropdownButton() {
-    return DropdownButton<String>(
-      items: listItem.map((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-      value: _newValue,
-      onChanged: (String changeValue) {
-        setState(() {
-          _newValue = changeValue;
-          hitungSuhu();
-        });
-      },
-    );
-  }
 }
+
 
